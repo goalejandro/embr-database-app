@@ -9,11 +9,11 @@ const router = Router();
  * the dataset bounded for CI smoke tests. Products, vendors, categories,
  * and customers are left intact (seeded data).
  *
- * Protected by EMBR_ALLOW_RESET=true env var — disabled in production.
+ * Enabled by default. Set EMBR_DISABLE_RESET=true to disable in production.
  */
 router.post('/', async (req, res) => {
-  if (process.env.EMBR_ALLOW_RESET !== 'true') {
-    return res.status(403).json({ error: 'Reset is disabled (set EMBR_ALLOW_RESET=true)' });
+  if (process.env.EMBR_DISABLE_RESET === 'true') {
+    return res.status(403).json({ error: 'Reset is disabled (EMBR_DISABLE_RESET=true)' });
   }
 
   const pool = getPool();
